@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill NFT Certificate Generator | Study-to-Earn</title>
+    <meta name="description"
+        content="Generate verifiable Skill NFT Certificates for students on the Shardeum blockchain." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue-50: #eff6ff;
+            --blue-100: #dbeafe;
+            --blue-200: #bfdbfe;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --blue-800: #1e40af;
+            --blue-900: #1e3a8a;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --amber-400: #fbbf24;
+            --emerald-400: #34d399;
+            --purple-500: #a855f7;
+            --rose-400: #fb7185;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--slate-900);
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ── Nav ─────────────────────────────────────────────── */
+        nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        nav .logo {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        nav .logo span {
+            color: var(--blue-600);
+        }
+
+        nav .badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            background: var(--blue-800);
+            color: var(--blue-200);
+            border-radius: 999px;
+            padding: 2px 10px;
+            border: 1px solid var(--blue-700);
+        }
+
+        nav a {
+            margin-left: auto;
+            color: var(--slate-400);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        /* ── Layout ──────────────────────────────────────────── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .hero p {
+            color: var(--slate-400);
+            margin-top: .75rem;
+            font-size: .95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media(max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── Card ─────────────────────────────────────────────── */
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            padding: 1.75rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-title {
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--slate-400);
+            margin-bottom: 1.25rem;
+        }
+
+        /* ── Form ─────────────────────────────────────────────── */
+        .field {
+            margin-bottom: 1.1rem;
+        }
+
+        label {
+            display: block;
+            font-size: .8rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: .4rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: .6rem .85rem;
+            font-family: inherit;
+            font-size: .88rem;
+            color: #e2e8f0;
+            transition: border-color .15s, box-shadow .15s;
+            outline: none;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--slate-500);
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--blue-600);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .25);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* ── Button ────────────────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: .88rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: .7rem 1.5rem;
+            transition: all .15s;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue-700), #7c3aed);
+            color: #fff;
+            width: 100%;
+            justify-content: center;
+            font-size: .95rem;
+            padding: .85rem;
+        }
+
+        .btn-primary:hover {
+            opacity: .88;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-sm {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--slate-400);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: .45rem 1rem;
+            font-size: .8rem;
+            border-radius: 8px;
+        }
+
+        .btn-sm:hover {
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+        }
+
+        /* ── NFT Certificate Preview ──────────────────────────── */
+        #preview-section {
+            display: none;
+        }
+
+        #preview-section.visible {
+            display: block;
+        }
+
+        .nft-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 40%, #0f172a 100%);
+            border: 1px solid rgba(96, 165, 250, .25);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(37, 99, 235, .15), 0 0 120px rgba(124, 58, 237, .08);
+        }
+
+        .nft-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% -30%, rgba(96, 165, 250, .12) 0%, transparent 65%),
+                radial-gradient(ellipse at -20% 100%, rgba(124, 58, 237, .1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .nft-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .nft-card-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nft-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--blue-700), #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .nft-brand {
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+
+        .rarity-badge {
+            font-size: .7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        .rarity-Common {
+            background: rgba(148, 163, 184, .15);
+            color: #94a3b8;
+            border: 1px solid #94a3b8;
+        }
+
+        .rarity-Rare {
+            background: rgba(52, 211, 153, .15);
+            color: #34d399;
+            border: 1px solid #34d399;
+        }
+
+        .rarity-Epic {
+            background: rgba(168, 85, 247, .15);
+            color: #a855f7;
+            border: 1px solid #a855f7;
+        }
+
+        .rarity-Legendary {
+            background: rgba(251, 191, 36, .15);
+            color: #fbbf24;
+            border: 1px solid #fbbf24;
+        }
+
+        .nft-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: .25rem;
+        }
+
+        .nft-student {
+            font-size: .88rem;
+            color: var(--blue-200);
+            font-weight: 600;
+        }
+
+        .nft-wallet {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: var(--slate-500);
+            margin-top: 2px;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, .3), transparent);
+            margin: 1.2rem 0;
+        }
+
+        .nft-desc {
+            font-size: .82rem;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        .attrs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .6rem;
+            margin-top: 1.25rem;
+        }
+
+        .attr {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: 10px;
+            padding: .6rem .85rem;
+        }
+
+        .attr-type {
+            font-size: .62rem;
+            color: var(--blue-200);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 2px;
+        }
+
+        .attr-value {
+            font-size: .85rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* ── Score Ring ────────────────────────────────────────── */
+        .score-section {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .score-ring {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+        }
+
+        .score-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .score-ring .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: .85rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .score-info label {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--slate-500);
+        }
+
+        .score-auth {
+            font-size: .88rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .auth-high {
+            color: var(--emerald-400);
+        }
+
+        .auth-medium {
+            color: var(--amber-400);
+        }
+
+        .auth-low {
+            color: var(--rose-400);
+        }
+
+        .score-justification {
+            font-size: .75rem;
+            color: var(--slate-400);
+            margin-top: .25rem;
+            line-height: 1.5;
+        }
+
+        /* ── JSON Output ──────────────────────────────────────── */
+        .json-output {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .72rem;
+            color: #7dd3fc;
+            white-space: pre;
+            overflow-x: auto;
+            padding: 1rem;
+            background: rgba(0, 0, 0, .35);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .07);
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .actions {
+            display: flex;
+            gap: .5rem;
+            margin-top: .75rem;
+            flex-wrap: wrap;
+        }
+
+        .success-msg {
+            font-size: .78rem;
+            color: var(--emerald-400);
+            opacity: 0;
+            transition: opacity .3s;
+            margin-left: auto;
+            align-self: center;
+        }
+
+        .success-msg.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Study<span>to</span>Earn</div>
+        <span class="badge">Shardeum</span>
+        <a href="/">← Dashboard</a>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Skill NFT <span>Certificate Generator</span></h1>
+            <p>Fill in student details below to generate mint-ready, verifiable NFT metadata.</p>
+        </div>
+
+        <div class="grid">
+
+            <!-- ── FORM ────────────────────────────────────────────── -->
+            <div>
+                <div class="card">
+                    <div class="card-title">📋 Student Information</div>
+
+                    <div class="field">
+                        <label for="f-name">Student Name</label>
+                        <input id="f-name" type="text" placeholder="e.g. Alice Web3" value="Alice Web3" />
+                    </div>
+                    <div class="field">
+                        <label for="f-wallet">Wallet Address</label>
+                        <input id="f-wallet" type="text" placeholder="0x..."
+                            value="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" />
+                    </div>
+                    <div class="field">
+                        <label for="f-skill">Skill</label>
+                        <input id="f-skill" type="text" placeholder="e.g. Solidity Smart Contract Development"
+                            value="Solidity Smart Contract Development" />
+                    </div>
+                    <div class="field">
+                        <label for="f-desc">Description of Work</label>
+                        <textarea id="f-desc"
+                            placeholder="Describe what the student built or taught...">Designed and deployed a decentralized Study-to-Earn escrow platform on Shardeum with ERC-20 tokenomics, ReentrancyGuard security, and an automated tutor reputation system.</textarea>
+                    </div>
+                    <div class="field">
+                        <label for="f-proof">Proof of Work (links or explanation)</label>
+                        <textarea id="f-proof" rows="2"
+                            placeholder="GitHub repo URL, on-chain tx hash, explorer link...">https://github.com/example/repo | https://explorer.shardeum.org/tx/0xabc123</textarea>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:1rem">
+                    <div class="card-title">📊 Impact Metrics</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                        <div class="field" style="margin-bottom:0">
+                            <label for="f-students">Students Taught</label>
+                            <input id="f-students" type="number" placeholder="0" value="30" min="0" />
+                        </div>
+                        <div class="field" style="margin-bottom:0">
+                            <label for="f-sessions">Sessions Completed</label>
+                            <input id="f-sessions" type="number" placeholder="0" value="45" min="0" />
+                        </div>
+                        <div class="field" style="margin-bottom:0">
+                            <label for="f-projects">Projects Built</label>
+                            <input id="f-projects" type="number" placeholder="0" value="2" min="0" />
+                        </div>
+                        <div class="field" style="margin-bottom:0">
+                            <label for="f-custom">Custom Metric Note</label>
+                            <input id="f-custom" type="text" placeholder="Optional note..."
+                                value="Deployed to Shardeum Testnet with 30 active users" />
+                        </div>
+                    </div>
+                    <div class="field" style="margin-top:.75rem">
+                        <label for="f-peers">Peer Reviews (one per line, optional)</label>
+                        <textarea id="f-peers" rows="3" placeholder="Review 1&#10;Review 2">Excellent understanding of on-chain security — tutor_0xDeFi
+Helped me understand Solidity re-entrancy attacks clearly — student_0xAjay</textarea>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top:1rem" onclick="generate()">
+                    ⚡ Generate Certificate
+                </button>
+            </div>
+
+            <!-- ── PREVIEW ──────────────────────────────────────────── -->
+            <div id="preview-section">
+
+                <!-- NFT Card -->
+                <div class="nft-card" id="nft-card">
+                    <div class="nft-card-header">
+                        <div class="nft-card-logo">
+                            <div class="nft-icon">🎓</div>
+                            <div>
+                                <div class="nft-brand">Verifiable Skill NFT</div>
+                                <div style="font-size:.65rem;color:#475569">Powered by Shardeum</div>
+                            </div>
+                        </div>
+                        <div class="rarity-badge" id="nft-rarity">Epic</div>
+                    </div>
+
+                    <div id="nft-title" class="nft-title">Skill Certificate: —</div>
+                    <div id="nft-student" class="nft-student">—</div>
+                    <div id="nft-wallet" class="nft-wallet">—</div>
+
+                    <div class="divider"></div>
+                    <div id="nft-desc" class="nft-desc">—</div>
+                    <div class="attrs" id="nft-attrs"></div>
+
+                    <!-- Score ring -->
+                    <div class="score-section">
+                        <div class="score-ring">
+                            <svg width="64" height="64" viewBox="0 0 64 64">
+                                <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,.08)"
+                                    stroke-width="6" />
+                                <circle id="score-arc" cx="32" cy="32" r="26" fill="none" stroke="url(#grad)"
+                                    stroke-width="6" stroke-linecap="round" stroke-dasharray="163.4"
+                                    stroke-dashoffset="163.4" style="transition:stroke-dashoffset .8s ease" />
+                                <defs>
+                                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#60a5fa" />
+                                        <stop offset="100%" stop-color="#a78bfa" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="score-text" id="score-num">—</div>
+                        </div>
+                        <div class="score-info">
+                            <label>Verification Score · Authenticity</label>
+                            <div class="score-auth" id="score-auth">—</div>
+                            <div class="score-justification" id="score-just">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON Output -->
+                <div class="card" style="margin-top:1rem">
+                    <div class="card-title">📄 Mint-Ready JSON Metadata</div>
+                    <div class="json-output" id="json-out"></div>
+                    <div class="actions">
+                        <button class="btn btn-sm" onclick="copyJSON()">📋 Copy JSON</button>
+                        <button class="btn btn-sm" onclick="downloadJSON()">⬇ Download .json</button>
+                        <span class="success-msg" id="copy-msg">Copied!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder when no certificate yet -->
+            <div id="placeholder-section" class="card"
+                style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:420px;text-align:center;gap:1rem">
+                <div style="font-size:3.5rem">🏅</div>
+                <div style="font-weight:700;color:#fff;font-size:1.05rem">Your certificate preview will appear here
+                </div>
+                <div style="font-size:.82rem;color:var(--slate-400);max-width:240px">Fill in the student details on the
+                    left and click Generate Certificate</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let _cert = null;
+
+        /* ── Scoring logic (mirrors generateCertificate.js) ───────────────── */
+        function computeImpact(imp) {
+            return (imp.students || 0) + (imp.sessions || 0) + (imp.projects || 0) * 3;
+        }
+
+        function assignRarity(n) {
+            if (n >= 50) return "Legendary";
+            if (n >= 20) return "Epic";
+            if (n >= 5) return "Rare";
+            return "Common";
+        }
+
+        function assignSkillLevel(n) {
+            if (n >= 50) return "Expert";
+            if (n >= 20) return "Advanced";
+            if (n >= 5) return "Intermediate";
+            return "Beginner";
+        }
+
+        function scoreProof(p) {
+            let s = 0;
+            if (/explorer\.|etherscan\.|shardeumexplorer/i.test(p)) s += 15;
+            if (/github\.com/i.test(p)) s += 10;
+            if (/https?:\/\//i.test(p)) s += 5;
+            return Math.min(s, 30);
+        }
+
+        function scorePeers(arr) { return Math.min(arr.length * 5, 20); }
+
+        function scoreImpact(n) { return Math.min(Math.round(n / 2), 50); }
+
+        function authLabel(s) {
+            if (s >= 70) return "high";
+            if (s >= 40) return "medium";
+            return "low";
+        }
+
+        function buildEvidence(inp, impactCount) {
+            const parts = [];
+            if (inp.impact.students) parts.push(`${inp.impact.students} students taught`);
+            if (inp.impact.sessions) parts.push(`${inp.impact.sessions} sessions completed`);
+            if (inp.impact.projects) parts.push(`${inp.impact.projects} project(s) built`);
+            if (inp.impact.custom) parts.push(inp.impact.custom);
+            if (inp.peers.length) parts.push(`${inp.peers.length} peer review(s) received`);
+            return parts.join(". ") + ".";
+        }
+
+        function generate() {
+            const inp = {
+                name: document.getElementById("f-name").value.trim() || "Anonymous",
+                wallet: document.getElementById("f-wallet").value.trim() || "0x0000...0000",
+                skill: document.getElementById("f-skill").value.trim() || "General Skill",
+                desc: document.getElementById("f-desc").value.trim() || "",
+                proof: document.getElementById("f-proof").value.trim() || "",
+                impact: {
+                    students: parseInt(document.getElementById("f-students").value) || 0,
+                    sessions: parseInt(document.getElementById("f-sessions").value) || 0,
+                    projects: parseInt(document.getElementById("f-projects").value) || 0,
+                    custom: document.getElementById("f-custom").value.trim(),
+                },
+                peers: document.getElementById("f-peers").value
+                    .split("\n").map(l => l.trim()).filter(Boolean),
+            };
+
+            const impactCount = computeImpact(inp.impact);
+            const rarity = assignRarity(impactCount);
+            const skillLevel = assignSkillLevel(impactCount);
+            const proofScore = scoreProof(inp.proof);
+            const peerScore = scorePeers(inp.peers);
+            const impactScore = scoreImpact(impactCount);
+            const totalScore = Math.min(proofScore + peerScore + impactScore, 100);
+            const auth = authLabel(totalScore);
+            const evidence = buildEvidence(inp, impactCount);
+
+            const imagePrompt = `A futuristic NFT skill certificate for "${inp.skill}", minimal dark holographic UI, glowing teal-blue neon borders, floating digital seal with wallet address, geometric blockchain node graph in background, subtle academic crest watermark, ultra-detailed, Unreal Engine 5 render, 4K.`;
+
+            const justification = `On-chain/repository proof scored ${proofScore}/30. Impact metrics (${impactCount} total impact units) scored ${impactScore}/50. Peer validation from ${inp.peers.length} review(s) scored ${peerScore}/20. Total verification score: ${totalScore}/100.`;
+
+            _cert = {
+                nft: {
+                    title: `Skill Certificate: ${inp.skill}`,
+                    student_name: inp.name,
+                    wallet_address: inp.wallet,
+                    skill: inp.skill,
+                    description: inp.desc,
+                    evidence_summary: evidence,
+                    image_prompt: imagePrompt,
+                    timestamp: new Date().toISOString(),
+                    attributes: [
+                        { trait_type: "Skill Level", value: skillLevel },
+                        { trait_type: "Impact", value: `${impactCount} impact units` },
+                        { trait_type: "Verification Score", value: totalScore },
+                        { trait_type: "Rarity", value: rarity },
+                    ],
+                },
+                verification: { score: totalScore, authenticity: auth, justification },
+                rarity,
+            };
+
+            renderCert(_cert, totalScore, auth);
+        }
+
+        function renderCert(cert, score, auth) {
+            document.getElementById("placeholder-section").style.display = "none";
+            const ps = document.getElementById("preview-section");
+            ps.style.display = "block";
+            setTimeout(() => ps.classList.add("visible"), 10);
+
+            const nft = cert.nft;
+
+            // Rarity badge
+            const rb = document.getElementById("nft-rarity");
+            rb.textContent = cert.rarity;
+            rb.className = `rarity-badge rarity-${cert.rarity}`;
+
+            document.getElementById("nft-title").textContent = nft.title;
+            document.getElementById("nft-student").textContent = nft.student_name;
+            document.getElementById("nft-wallet").textContent = nft.wallet_address;
+            document.getElementById("nft-desc").textContent = nft.description;
+
+            // Attrs
+            const attrsEl = document.getElementById("nft-attrs");
+            attrsEl.innerHTML = nft.attributes.map(a => `
+      <div class="attr">
+        <div class="attr-type">${a.trait_type}</div>
+        <div class="attr-value">${a.value}</div>
+      </div>`).join("");
+
+            // Score arc
+            const circumference = 163.4;
+            const offset = circumference - (score / 100) * circumference;
+            document.getElementById("score-arc").style.strokeDashoffset = offset;
+            document.getElementById("score-num").textContent = score;
+
+            // Auth label
+            const authEl = document.getElementById("score-auth");
+            authEl.textContent = auth.charAt(0).toUpperCase() + auth.slice(1) + " authenticity";
+            authEl.className = `score-auth auth-${auth}`;
+
+            document.getElementById("score-just").textContent = cert.verification.justification;
+
+            // JSON
+            document.getElementById("json-out").textContent = JSON.stringify(cert, null, 2);
+        }
+
+        function copyJSON() {
+            if (!_cert) return;
+            navigator.clipboard.writeText(JSON.stringify(_cert, null, 2)).then(() => {
+                const msg = document.getElementById("copy-msg");
+                msg.classList.add("show");
+                setTimeout(() => msg.classList.remove("show"), 2000);
+            });
+        }
+
+        function downloadJSON() {
+            if (!_cert) return;
+            const blob = new Blob([JSON.stringify(_cert, null, 2)], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `nft-certificate-${Date.now()}.json`;
+            a.click();
+        }
+
+        // Auto-generate on load with demo values
+        window.onload = () => generate();
+    </script>
+</body>
+
+</html>

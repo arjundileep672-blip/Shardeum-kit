@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { GraduationCap, RefreshCw, ChevronDown, Wallet } from "lucide-react";
+import { GraduationCap, RefreshCw, ChevronDown, Wallet, Award } from "lucide-react";
 import StatsHeader from "./StatsHeader";
 import BookingForm from "./BookingForm";
 import ActiveSessionsList from "./ActiveSessionsList";
@@ -76,6 +76,14 @@ export default function StudyDashboard() {
 
                     {/* Right controls */}
                     <div className="flex items-center gap-3">
+                        <a
+                            href="/certificate-generator.html"
+                            className="btn-ghost !py-1.5 !px-3 text-sm hidden sm:inline-flex"
+                            title="NFT Certificate Generator"
+                        >
+                            <Award size={15} />
+                            Certificates
+                        </a>
                         <button
                             className="btn-ghost !py-1.5 !px-2.5"
                             onClick={handleAction}
